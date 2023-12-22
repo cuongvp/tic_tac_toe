@@ -1,0 +1,29 @@
+*{
+    box-sizing: border-box;
+}
+
+.square{
+    width: 40px;
+    height: 40px;
+
+    border: black solid 0.2px;
+    outline: none;
+
+    background-color: white;
+    font-weight: bolder;
+
+    padding-bottom: 10px;
+}
+
+
+.squareX{
+    color: red;
+}
+
+.squareO{
+    color: green;
+}
+
+.square:hover{
+    cursor: pointer;
+}
