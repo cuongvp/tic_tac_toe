@@ -19,7 +19,7 @@ const colorWinning = (winningArr) => {
         var posY = item.posY
 
         var square = document.querySelector(`.square[posx='${posX}'][posy='${posY}']`)
-        square.style.backgroundColor = '#3498db'
+        square.style.backgroundColor = '#FF9800'
     });
 }
 
@@ -30,18 +30,18 @@ function App() {
     const ChangeCurUser = (value, posX, posY) => {
         // thay đỗi giá trị trên mảng
         Matrix[posX][posY] = value;
-        // Kiểm tra win
-        let winningArr = checkWin(posX, posY, value);
-
-        if(winningArr.length > 0){
-            colorWinning(winningArr)
-            alert(`Congratulation! You are the winner!`);
-        }
         // Chỉnh sửa trên giao diện
         if(value === 'X'){
             ChangeUser('O');
         }else{
             ChangeUser('X');
+        }
+        // Kiểm tra win
+        let winningArr = checkWin(posX, posY, value);
+
+        if(winningArr.length >= countWin){
+            colorWinning(winningArr)
+            alert(`Congratulation! You are the winner!`);
         }
     }
     
@@ -120,10 +120,75 @@ function App() {
                 winningArr = []
             }   
         }
-        return []
-        // Kiểm tra hướng bắc nam
 
-        
+        // 3) Kiểm tra hướng dấu sắc
+        let TopRight = 0; let BottomLeft = 0;
+        // 3a) tìm 2 cận biên
+        for(let i = 1; i < countWin; i++){
+            if(posX - i >= 1 && posY + 1 <= cols){
+                TopRight ++;
+            }
+
+            if(posX + i <= rows && posY - i >= 1){
+                BottomLeft --;
+            }
+        }
+        // 3b) tìm
+        count = 0
+        winningArr = []
+        for(let i = BottomLeft; i<= TopRight; i ++){
+            let item = Matrix[posX - i][posY + i]
+            if(item === value){
+                count ++;
+                winningArr.push({
+                    posX: posX - i,
+                    posY: posY + i
+                })
+              
+                if(count >= countWin){
+                    return winningArr;
+                }
+
+            }else{
+                count = 0;
+                winningArr = []
+            }   
+        }
+        // 4) Hướng dấu huyền
+        let TopLeft = 0; let BottomRight = 0;
+        // 4a) tìm 2 cận biên
+        for(let i = 1; i < countWin; i++){
+            if(posX + i <= rows && posY + 1 <= cols){
+                BottomRight ++;
+            }
+
+            if(posX - i >= 1 && posY - i >= 1){
+                TopLeft --;
+            }
+        }
+        // 4b) Tìm
+        count = 0
+        winningArr = []
+        for(let i = TopLeft; i<= BottomRight; i ++){
+            let item = Matrix[posX + i][posY + i]
+            if(item === value){
+                count ++;
+                winningArr.push({
+                    posX: posX + i,
+                    posY: posY + i
+                })
+              
+                if(count >= countWin){
+                    return winningArr;
+                }
+
+            }else{
+                count = 0;
+                winningArr = []
+            }   
+        }
+        return []
+          
     }
 
     return (

@@ -9,7 +9,7 @@
     border: black solid 0.2px;
     outline: none;
 
-    background-color: white;
+    background-color: #ffda79;
     font-weight: bolder;
 
     padding-bottom: 10px;
@@ -17,11 +17,11 @@
 
 
 .squareX{
-    color: red;
+    color: #E91E63;
 }
 
 .squareO{
-    color: green;
+    color: #4CAF50;
 }
 
 .square:hover{
